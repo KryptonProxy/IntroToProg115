@@ -5,6 +5,8 @@
 
 #include "Engine/Engine.h"
 
+#include "InGameMenu.h"
+
 UIntroGameInstance::UIntroGameInstance(const FObjectInitializer& ObjectInitializer)
 {
 
@@ -13,6 +15,14 @@ UIntroGameInstance::UIntroGameInstance(const FObjectInitializer& ObjectInitializ
 void UIntroGameInstance::Init()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Game Instance Init"));
+}
+
+void UIntroGameInstance::InGameLoadMenu()
+{
+	if (!ensure(InGameMenuClass != nullptr)) return;
+	UInGameMenu* GameMenu = CreateWidget<UInGameMenu>(this, InGameMenuClass);
+
+	GameMenu->Setup();
 }
 
 void UIntroGameInstance::SayHi()
