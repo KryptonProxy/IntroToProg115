@@ -2,26 +2,35 @@
 
 
 #include "IntroGameInstance.h"
-
 #include "UObject/ConstructorHelpers.h"
-
 #include "Engine/Engine.h"
-
 #include "InGameMenu.h"
+#include "MainMenu.h"
 
 UIntroGameInstance::UIntroGameInstance(const FObjectInitializer& ObjectInitializer)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Game Init"));
 
 	ConstructorHelpers::FClassFinder<UUserWidget>InGameMenuBPClass(TEXT("/Game/UI/InGameMenu"));
-	
 	if (!ensure(InGameMenuBPClass.Class != nullptr)) return;
 	InGameMenuClass = InGameMenuBPClass.Class;
+
+	ConstructorHelpers::FClassFinder<UUserWidget>MainMenuBPClass(TEXT("/Game/MainMenu/MainMenu"));
+	if (!ensure(MainMenuBPClass.Class != nullptr)) return;
+	MainMenuClass = MainMenuBPClass.Class;
 }
 
 void UIntroGameInstance::Init()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Game Instance Init"));
+}
+
+void UIntroGameInstance::LoadMainMenu()
+{
+	if (!ensure(MainMenuClass != nullptr)) return;
+	UMainMenu* Menu = CreateWidget<UMainMenu>(this, MainMenuClass);
+
+	Menu->Setup();
 }
 
 void UIntroGameInstance::InGameLoadMenu()

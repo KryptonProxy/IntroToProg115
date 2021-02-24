@@ -20,7 +20,10 @@ public:
 
 	virtual void Init();
 
+	UFUNCTION(BlueprintCallable)
+	void LoadMainMenu();
 
+	TSubclassOf<class UUserWidget> MainMenuClass;
 
 	UFUNCTION(BlueprintCallable)
 	void InGameLoadMenu();
